@@ -80,7 +80,7 @@ class Queue<T> {
                 _queueLock.release();
             #end
         } else {
-            Threads.await(function() {
+            Threads.await_(function() {
                 #if ((haxe_ver >= 4) && (eval || neko || cpp || hl || java || cs))
                     msg = _queue.pop(false);
                 #elseif (cpp||neko)

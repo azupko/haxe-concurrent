@@ -156,15 +156,15 @@ class RLock implements Acquirable {
     #if !flash inline #end
     private function tryAcquireInternal(timeoutMS = 0):Bool {
         #if ((haxe_ver >= 4) && (eval || neko || cpp || hl || java || cs))
-            return Threads.await(function() return _rlock.tryAcquire(), timeoutMS);
+            return Threads.await_(function() return _rlock.tryAcquire(), timeoutMS);
         #elseif cs
             return cs.system.threading.Monitor.TryEnter(this, timeoutMS);
         #elseif (cpp||neko)
-            return Threads.await(function() return _rlock.tryAcquire(), timeoutMS);
+            return Threads.await_(function() return _rlock.tryAcquire(), timeoutMS);
         #elseif java
             return _rlock.tryLock(timeoutMS, java.util.concurrent.TimeUnit.MILLISECONDS);
         #elseif python
-            return Threads.await(function() return _rlock.acquire(false), timeoutMS);
+            return Threads.await_(function() return _rlock.acquire(false), timeoutMS);
         #elseif flash
             var startAt = Dates.now();
             while (true) {

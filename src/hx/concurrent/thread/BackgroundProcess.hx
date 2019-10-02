@@ -131,7 +131,7 @@ class BackgroundProcess {
      * If <code>timeoutMS</code> is set to value lower than -1, results in an exception.
      */
     public function awaitExit(timeoutMS:Int):Null<Int> {
-        Threads.await(function() return exitCode != null, timeoutMS);
+        Threads.await_(function() return exitCode != null, timeoutMS);
         return exitCode;
     }
 

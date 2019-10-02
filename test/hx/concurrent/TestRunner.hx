@@ -158,14 +158,14 @@ class TestRunner extends hx.doctest.DocTestRunner {
         assertEquals(0, signal.count);
         assertTrue(signal.tryAwait(10));
 
-        signal.await();
+        signal.await_();
 
         var signal = new CountDownLatch(1);
         Threads.spawn(function() {
             signal.countDown();
         });
 
-        signal.await();
+        signal.await_();
     }
     #end
 
@@ -340,7 +340,7 @@ class TestRunner extends hx.doctest.DocTestRunner {
             assertTrue(lock.writeLock.isAcquiredByOtherThread);
             signal.countDown();
         });
-        signal.await();
+        signal.await_();
 
         lock.writeLock.release();
         lock.readLock.acquire();
@@ -361,7 +361,7 @@ class TestRunner extends hx.doctest.DocTestRunner {
             assertFalse(lock.writeLock.tryAcquire());
             signal.countDown();
         });
-        signal.await();
+        signal.await_();
         lock.readLock.release();
         #end
     }
@@ -391,7 +391,7 @@ class TestRunner extends hx.doctest.DocTestRunner {
             var i = new AtomicInt(0);
             for (j in 0...10)
                 Threads.spawn(function() i.increment());
-            assertTrue(Threads.await(function() return i.value == 10, 200));
+            assertTrue(Threads.await_(function() return i.value == 10, 200));
         #else
             assertFalse(Threads.isSupported);
         #end

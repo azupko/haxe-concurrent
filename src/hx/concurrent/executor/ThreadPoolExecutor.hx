@@ -110,7 +110,7 @@ class ThreadPoolExecutor extends Executor {
                 t.cancel();
             }
 
-            Threads.await(function() {
+            Threads.await_(function() {
                 return _threadPool.state == STOPPED;
             }, -1);
             state = STOPPED;

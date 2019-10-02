@@ -19,7 +19,7 @@ abstract CountDownLatch(java.util.concurrent.CountDownLatch) {
 
     inline public function new(count:Int) this = new java.util.concurrent.CountDownLatch(count);
     inline public function countDown():Void this.countDown();
-    inline public function await():Void this.await();
+    inline public function await_():Void this.await();
     inline public function tryAwait(timeoutMS:Int):Bool return this.await(timeoutMS, java.util.concurrent.TimeUnit.MILLISECONDS);
 }
 
@@ -44,14 +44,14 @@ class CountDownLatch {
     }
 
 
-    public function await():Void {
+    public function await_():Void {
         while(_count > 0)
             Threads.sleep(10);
     }
 
 
     public function tryAwait(timeoutMS:Int):Bool {
-        return Threads.await(function() return count < 1, timeoutMS);
+        return Threads.await_(function() return count < 1, timeoutMS);
     }
 }
 #end

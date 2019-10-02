@@ -132,7 +132,7 @@ class TaskFutureBase<T> extends FutureBase<T> implements TaskFuture<T> {
 
     #if threads
     public function waitAndGet(timeoutMS:Int):FutureResult<T> {
-        Threads.await(function() {
+        Threads.await_(function() {
             return switch(this.result) {
                 case NONE(_): false;
                 default: true;

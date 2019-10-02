@@ -186,7 +186,7 @@ class WriteLock extends RLock {
         var readLockHolders = rwLock.readLock.holders;
 
         #if (flash||sys)
-        return Threads.await(function() {
+        return Threads.await_(function() {
             return rwLock.sync.execute(function() {
         #end
                 if (readLockHolders.length > 0) {
